@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://yousoft.site/sitemap.xml
+Sitemap: https://storesoft.org/sitemap.xml

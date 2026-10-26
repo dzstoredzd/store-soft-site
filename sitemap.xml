@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yousoft.site/</loc>
+    <loc>https://storesoft.org/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://yousoft.site/pricing/</loc>
+    <loc>https://storesoft.org/pricing/</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://yousoft.site/storesoft/download/</loc>
+    <loc>https://storesoft.org/storesoft/download/</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://yousoft.site/storesoft/v1/android/</loc>
+    <loc>https://storesoft.org/storesoft/v1/android/</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://yousoft.site/privacy.html</loc>
+    <loc>https://storesoft.org/privacy.html</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://yousoft.site/terms.html</loc>
+    <loc>https://storesoft.org/terms.html</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://yousoft.site/delete-account.html</loc>
+    <loc>https://storesoft.org/delete-account.html</loc>
     <priority>0.5</priority>
   </url>
 </urlset>

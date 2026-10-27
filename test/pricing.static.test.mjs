@@ -28,17 +28,13 @@ test('website owns complete localized offers and integer-centime prices without 
   assert.match(yearly.billing_note.ar,/يحتفظون بتفعيلهم الحالي/);
   assert.match(script,/today <= offer\.available_until/);
 });
-test('home page and welcome email show the yearly price, not a one-time payment', async()=>{
+test('home page shows the yearly price, not a one-time payment', async()=>{
   const read=file=>readFile(new URL('../'+file,import.meta.url),'utf8');
-  const [home,page,email]=await Promise.all([read('home.js'),read('index.html'),read('google-apps-script/Code.gs')]);
+  const [home,page]=await Promise.all([read('home.js'),read('index.html')]);
   assert.match(home,/"yearly": "اشتراك سنوي بسيط"/);
   assert.match(home,/"yearly": "Abonnement annuel simple"/);
   assert.match(page,/data-home-copy="yearly"/);
   assert.doesNotMatch(home+page,/دفع مرة واحدة|paiement unique/);
-  assert.equal((email.match(/6900 دج سنويًا للجهاز الأول/g)||[]).length,2);
-  assert.equal((email.match(/3000 دج سنويًا لكل جهاز إضافي/g)||[]).length,2);
-  assert.equal((email.match(/ابتداءً من 1 نوفمبر 2026/g)||[]).length,2);
-  assert.doesNotMatch(email,/7000 دج|مرة واحدة للجهاز الأول/);
 });
 test('every Store Soft page uses the self-hosted app font (IBM Plex Sans Arabic), no Google Fonts', async()=>{
   const read=file=>readFile(new URL('../'+file,import.meta.url),'utf8');

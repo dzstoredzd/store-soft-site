@@ -25,8 +25,7 @@ with the days left (today and 31 October count, Algeria time) and its own
 WhatsApp link; from 1 November it hides itself, so no publish is needed that
 day. The "we help you choose" WhatsApp box shows only when prices cannot be
 shown. Support confirms the actual charge before activation. The homepage
-hero says "yearly subscription" and the Apps Script welcome email shows the
-same prices (redeploy Code.gs after editing it).
+hero says "yearly subscription".
 Publish the website after edits and bump the offers.js version in pricing/index.html
 so existing browsers receive the new file. No app update is needed for these edits.
 
@@ -114,9 +113,9 @@ The download form posts to the `submit-store-soft-lead` Supabase Edge Function.
 Its schema is recorded in the versioned migration under `supabase/migrations/`. The leads
 table and immutable `lead_events` timeline are private (RLS enabled, no
 browser-role grants); only guarded admin RPCs and Edge Functions access them.
-Google Sheets mirroring uses `google-apps-script/Code.gs` and the
-function secrets `GOOGLE_SHEETS_WEBHOOK_URL` and
-`GOOGLE_SHEETS_WEBHOOK_SECRET`.
+The Google Sheet copy and the CRM confirmation emails (Google Apps Script) were
+removed on 2026-10-27: leads are saved only in the Supabase CRM, and CRM
+"Confirm" only updates the lead. The `google-apps-script/` folder is gone.
 
 Every valid form submission creates a new lead. The current `phone_shop_select_v4`
 form records name, phone/WhatsApp number, and an activity from the approved list.
@@ -139,7 +138,7 @@ updates this download without another website edit.
 separate from installation/app milestones. Google Play is now live in production,
 so no tester email or approval step is needed.
 
-### Google Sheet workflow
+### Google Sheet workflow (removed 2026-10-27, kept as history)
 
 The Apps Script keeps separate `date` (`dd/MM/yyyy`) and `time` (`HH:mm`)
 columns in GMT+1 and inserts each new lead at row 2 so the newest leads stay

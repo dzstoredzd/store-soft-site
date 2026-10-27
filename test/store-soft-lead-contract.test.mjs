@@ -59,19 +59,8 @@ test('migration stores free-text activity and requested platform without requiri
   assert.match(migration, /requested_platform in \('phone', 'computer', 'both'\)/);
 });
 
-test('Google Sheets deduplicates by submission id, not email', async () => {
-  const appsScript = await read('google-apps-script/Code.gs');
-
-  assert.match(appsScript, /createTextFinder\(String\(leadId\)\)/);
-  assert.doesNotMatch(appsScript, /createTextFinder\(String\(lead\.email\)\)/);
-  assert.match(appsScript, /'requested_platform'/);
-  assert.match(appsScript, /lead\.requested_platform \|\| ''/);
-  assert.match(appsScript, /function upsertLead_/);
-  assert.match(appsScript, /getRange\(existingRow, 1, 1, row\.length\)\.setValues/);
-  assert.match(appsScript, /action === 'send_confirmation'/);
-  assert.match(appsScript, /function enableCrmEmailControl\(\)/);
-  assert.match(appsScript, /CRM_EMAIL_ENABLED/);
-  assert.match(appsScript, /disableStatusEditTrigger_/);
+test('the Google Apps Script (Sheet copy and confirmation emails) is gone', async () => {
+  await assert.rejects(read('google-apps-script/Code.gs'));
 });
 
 test('CRM migration preserves legacy leads and protects tracking data', async () => {
@@ -126,39 +115,6 @@ test('public tracking accepts only six-character codes and allowlisted app event
   assert.match(tryScript, /\^\[23456789ABCDEFGHJKLMNPQRSTUVWXYZ\]\{6\}\$/);
 });
 
-test('confirmation email is authenticated, repeatable, counted, and uses branded tracked URL', async () => {
-  const [action, appsScript, migration] = await Promise.all([
-    read('supabase/functions/crm-admin-action/index.ts'), read('google-apps-script/Code.gs'),
-    read('supabase/migrations/20260830142229_store_soft_crm_repeat_email.sql'),
-  ]);
-  assert.match(action, /sync_admin_crm_apply_action/);
-  assert.match(action, /sync_admin_crm_record_email_sent/);
-  assert.match(action, /action: 'send_confirmation'/);
-  assert.match(action, /result\.email_sent !== true/);
-  assert.match(action, /action === 'CONFIRM'/);
-  assert.match(action, /warning: 'email_delivery_failed'/);
-  assert.match(action, /origin === 'null'/);
-  assert.match(action, /localhost\|127\\\.0\\\.0\\\.1/);
-  assert.doesNotMatch(action, /if \(lead\.email_sent_at\) return/);
-  assert.doesNotMatch(action, /already_sent: true/);
-  assert.doesNotMatch(appsScript, /if \(sentCell\.getValue\(\)\) return/);
-  assert.match(appsScript, /email_sent: true/);
-  assert.match(appsScript, /storesoft\\\/try/);
-  assert.match(appsScript, /sendConfirmedEmail_\(email, name, trackedUrl\)/);
-  assert.match(appsScript, /حمّل Store Soft من Google Play/);
-  assert.doesNotMatch(appsScript, /افتح الرابط باستعمال حساب Google Play نفسه الذي أدخلته في الطلب/);
-  assert.match(appsScript, /https:\/\/wa\.me\/213654338649/);
-  assert.match(appsScript, /تواصل معنا عبر واتساب/);
-  assert.match(appsScript, /storesoft_windows_latest\.exe/);
-  assert.match(appsScript, /CONFIG\.windowsDownloadUrl/);
-  assert.match(appsScript, /حمّل Store Soft على الكمبيوتر/);
-  assert.match(migration, /email_sent_count = email_sent_count \+ 1/);
-  assert.match(migration, /email_sent_at = coalesce\(email_sent_at, v_now\)/);
-  assert.match(migration, /email_last_sent_at = v_now/);
-  assert.match(migration, /perform sync\.require_vendor_admin\(\)/);
-  assert.match(migration, /from public, anon/);
-  assert.match(migration, /to authenticated, service_role/);
-});
 
 test('Sheet delivery never receives the CRM tracking token', async () => {
   const edgeFunction = await read('supabase/functions/submit-store-soft-lead/index.ts');

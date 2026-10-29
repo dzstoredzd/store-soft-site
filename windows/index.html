@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Store Soft — Windows</title>
+  <meta name="description" content="حمّل Store Soft على حاسوب Windows. البيع والمخزون وديون الزبائن، حتى بدون إنترنت." />
+  <link rel="canonical" href="https://storesoft.org/windows/" />
+  <link rel="icon" type="image/png" href="/assets/icon.png" />
+  <link rel="stylesheet" href="/assets/fonts/plex.css?v=20261101" />
+  <style>
+    :root {
+      --blue: #315ce8; --blue-dark: #2149cc; --paper: #f4f7ff; --white: #fff;
+      --ink: #15213d; --muted: #64708d; --line: #dce3f4; --note: #eef3ff;
+      --font: "IBM Plex Sans Arabic", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .page { width: min(560px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 40px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 20px; }
+    .brand img { border-radius: 12px; }
+    .lang { border: 1px solid var(--line); background: var(--white); border-radius: 999px; padding: 6px 14px; font: inherit; cursor: pointer; min-height: 40px; }
+    .card { background: var(--white); border-radius: 16px; box-shadow: 0 12px 40px rgba(20, 38, 83, 0.10); padding: 24px; }
+    h1 { font-size: 28px; line-height: 1.3; margin: 0 0 8px; }
+    .lead { color: var(--muted); margin: 0 0 20px; }
+    .download { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 60px; border-radius: 12px; background: var(--blue); color: var(--white); font-weight: 700; font-size: 18px; text-decoration: none; }
+    .download:hover { background: var(--blue-dark); }
+    .download svg { width: 22px; height: 22px; }
+    ol { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; }
+    li { display: flex; gap: 12px; align-items: flex-start; }
+    li > span { flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--note); color: var(--blue); font-weight: 700; display: grid; place-items: center; }
+    li b { display: block; }
+    li p { margin: 0; color: var(--muted); }
+    .note { margin-top: 20px; background: var(--note); border-radius: 12px; padding: 14px; display: flex; gap: 10px; }
+    .note svg { flex: none; width: 20px; height: 20px; color: var(--blue); margin-top: 3px; }
+    .note p { margin: 0; }
+    .help { text-align: center; margin-top: 20px; }
+    .help a { color: var(--blue); font-weight: 600; }
+    footer { text-align: center; color: var(--muted); font-size: 14px; margin-top: 24px; }
+    footer a { margin: 0 8px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="/" aria-label="Store Soft">
+        <img src="/assets/icon.png" alt="" width="40" height="40" />
+        <b dir="ltr">Store Soft</b>
+      </a>
+      <button class="lang" id="languageSwitch" type="button">Français</button>
+    </header>
+    <main class="card">
+      <h1 data-copy="title">Store Soft على حاسوب Windows</h1>
+      <p class="lead" data-copy="lead">افتح هذه الصفحة على حاسوب المحل، ثم حمّل التطبيق.</p>
+      <a class="download" id="downloadWindows" href="https://github.com/dzstoredzd/dz-store-releases/releases/latest" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
+        <span data-copy="download">تحميل نسخة Windows</span>
+      </a>
+      <ol>
+        <li><span>1</span><div><b data-copy="step1Title">حمّل الملف</b><p data-copy="step1Text">اضغط على الزر الأزرق. يُحفظ الملف في مجلد التنزيلات.</p></div></li>
+        <li><span>2</span><div><b data-copy="step2Title">ثبّت التطبيق</b><p data-copy="step2Text">افتح الملف واتبع الخطوات. إذا ظهر تحذير Windows باللون الأزرق، اضغط «مزيد من المعلومات» ثم «تشغيل على أي حال».</p></div></li>
+        <li><span>3</span><div><b data-copy="step3Title">افتح Store Soft</b><p data-copy="step3Text">ابدأ محلًا جديدًا، أو سجّل الدخول بحسابك لتربط الحاسوب بمحلك.</p></div></li>
+      </ol>
+      <div class="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>
+        <p data-copy="syncNote">تظهر منتجاتك ومبيعاتك على الهاتف والحاسوب معًا فقط مع المزامنة السحابية. بدونها، يبدأ الحاسوب بمحل جديد فارغ.</p>
+      </div>
+      <p class="help"><span data-copy="needHelp">تحتاج مساعدة؟</span> <a href="https://wa.me/213654338649" target="_blank" rel="noopener noreferrer" data-copy="whatsapp">راسلنا على واتساب</a></p>
+    </main>
+    <footer>
+      <a href="/pricing/" id="pricingLink" data-copy="pricing">الأسعار</a>
+      <a href="/privacy.html" data-copy="privacy">سياسة الخصوصية</a>
+      <a href="/terms.html" data-copy="terms">شروط الاستخدام</a>
+    </footer>
+  </div>
+  <script src="/storesoft/download/windows-download.js?v=20261007"></script>
+  <script>
+    (function () {
+      'use strict';
+      var copy = {
+        fr: {
+          title: 'Store Soft sur ordinateur Windows',
+          lead: 'Ouvrez cette page sur l’ordinateur du magasin, puis téléchargez l’application.',
+          download: 'Télécharger pour Windows',
+          step1Title: 'Téléchargez le fichier',
+          step1Text: 'Cliquez sur le bouton bleu. Le fichier va dans Téléchargements.',
+          step2Title: 'Installez l’application',
+          step2Text: 'Ouvrez le fichier et suivez les étapes. Si Windows affiche un avertissement bleu, cliquez sur « Informations complémentaires » puis « Exécuter quand même ».',
+          step3Title: 'Ouvrez Store Soft',
+          step3Text: 'Créez un nouveau magasin, ou connectez-vous avec votre compte pour relier l’ordinateur à votre magasin.',
+          syncNote: 'Vos produits et ventes apparaissent sur le téléphone et l’ordinateur seulement avec Cloud Sync. Sans lui, l’ordinateur commence un nouveau magasin vide.',
+          needHelp: 'Besoin d’aide ?',
+          whatsapp: 'Écrivez-nous sur WhatsApp',
+          pricing: 'Tarifs',
+          privacy: 'Confidentialité',
+          terms: 'Conditions d’utilisation'
+        },
+        en: {
+          title: 'Store Soft on a Windows computer',
+          lead: 'Open this page on the shop’s computer, then download the app.',
+          download: 'Download for Windows',
+          step1Title: 'Download the file',
+          step1Text: 'Click the blue button. The file goes to your Downloads folder.',
+          step2Title: 'Install the app',
+          step2Text: 'Open the file and follow the steps. If Windows shows a blue warning, click “More info” then “Run anyway”.',
+          step3Title: 'Open Store Soft',
+          step3Text: 'Start a new shop, or sign in with your account to link the computer to your shop.',
+          syncNote: 'Your products and sales show on both the phone and the computer only with Cloud Sync. Without it, the computer starts a new, empty shop.',
+          needHelp: 'Need help?',
+          whatsapp: 'Message us on WhatsApp',
+          pricing: 'Prices',
+          privacy: 'Privacy policy',
+          terms: 'Terms of use'
+        }
+      };
+      var arabic = {};
+      document.querySelectorAll('[data-copy]').forEach(function (el) { arabic[el.getAttribute('data-copy')] = el.textContent; });
+      copy.ar = arabic;
+      var names = { ar: 'العربية', fr: 'Français', en: 'English' };
+      var next = { ar: 'fr', fr: 'en', en: 'ar' };
+      var current = 'ar';
+      function setLanguage(language) {
+        current = copy[language] ? language : 'ar';
+        var texts = copy[current];
+        document.querySelectorAll('[data-copy]').forEach(function (el) {
+          var key = el.getAttribute('data-copy');
+          if (texts[key]) el.textContent = texts[key];
+        });
+        document.documentElement.lang = current;
+        document.documentElement.dir = current === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('pricingLink').href = '/pricing/?lang=' + current;
+        document.getElementById('languageSwitch').textContent = names[next[current]];
+      }
+      document.getElementById('languageSwitch').addEventListener('click', function () { setLanguage(next[current]); });
+      var params = new URLSearchParams(location.search);
+      setLanguage(params.get('lang') || 'ar');
+      // Points the button at the latest stable installer; keeps the releases page if the feed fails.
+      if (window.StoreSoftWindowsDownload) window.StoreSoftWindowsDownload.update(document.getElementById('downloadWindows'));
+    })();
+  </script>
+</body>
+</html>

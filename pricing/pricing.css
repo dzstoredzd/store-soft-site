@@ -42,6 +42,7 @@ main { padding-top: 32px; }
 .stepper button:disabled { opacity: .4; cursor: default; background: white; }
 .count { min-width: 40px; text-align: center; font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .extra { margin: 0; color: #59647e; font-size: 14px; }
+.more-devices { display: flex; align-items: center; min-height: 48px; color: #4b2db4; font-size: 14px; font-weight: 600; }
 .gains { margin: 24px 0 0; font-size: 18px; }
 .features { padding: 0; list-style: none; margin: 8px 0 24px; }
 .features li { padding: 6px 0 6px 25px; position: relative; }

@@ -48,22 +48,24 @@ try{
       assert.equal(await page.locator('#help').isVisible(),false,'One WhatsApp button when prices show');
       assert.doesNotMatch(await page.locator('.offers').innerText()+await strip.innerText(),/دج|7000|6900/,'One price format: "7 000 DA"');
       assert.ok(await page.evaluate(async()=>{await document.fonts.ready;return document.fonts.check('700 16px "IBM Plex Sans Arabic"')&&getComputedStyle(document.body).fontFamily.startsWith('"IBM Plex Sans Arabic"');}),'App font is loaded');
-      await card.locator('.more').click();await card.locator('.more').click();
+      await card.locator('.more').click();
+      assert.equal(await card.locator('.amount').innerText(),'9 900 DA');
+      await card.locator('.more').click();
       assert.equal(await card.locator('.count').innerText(),'3');
+      assert.ok(await card.locator('.more').isDisabled(),'The packs stop at 3 devices');
+      assert.ok((await card.locator('.more-devices').getAttribute('href')).startsWith('https://wa.me/213654338649?text='),'More than 3 devices goes to WhatsApp');
       assert.equal(await card.locator('.amount').innerText(),'12 900 DA');
       assert.match(await card.locator('.per-day').innerText(),/36 DA/);
       const order=decodeURIComponent((await card.locator('.button').getAttribute('href')).split('?text=')[1]);
       assert.ok(order.includes('3')&&order.includes('12 900 DA'),'WhatsApp order carries devices and total');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${width}/${language} overflow`);
-      for(const selector of ['[data-code="yearly"] .less','[data-code="yearly"] .more','[data-code="yearly"] .button','.last-offer','[data-lang="ar"]']){
+      for(const selector of ['[data-code="yearly"] .less','[data-code="yearly"] .more','[data-code="yearly"] .more-devices','[data-code="yearly"] .button','.last-offer','[data-lang="ar"]']){
         const box=await page.locator(selector).boundingBox();assert.ok(box.height>=48&&box.width>=48,`${selector} touch target`);
       }
       await context.setOffline(true);
       await page.evaluate(()=>window.dispatchEvent(new Event('offline')));
       assert.equal(await page.locator('.offer').count(),1,'Loaded static prices remain available offline');
-      await card.locator('.more').click();
-      assert.equal(await card.locator('.amount').innerText(),'15 900 DA');
-      await card.locator('.less').click();await card.locator('.less').click();await card.locator('.less').click();
+      await card.locator('.less').click();await card.locator('.less').click();
       assert.equal(await card.locator('.amount').innerText(),'6 900 DA');
       await context.setOffline(false);
       if(process.env.QA_OUTPUT_DIR&&[390,1440].includes(width)){await mkdir(process.env.QA_OUTPUT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.QA_OUTPUT_DIR,`static-pricing-${width}-${language}.png`),fullPage:true});}

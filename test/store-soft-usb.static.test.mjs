@@ -6,6 +6,7 @@ import test from 'node:test';
 
 const html = await readFile(new URL('../usb/index.html', import.meta.url), 'utf8');
 const js = await readFile(new URL('../usb/usb.js', import.meta.url), 'utf8');
+const css = await readFile(new URL('../usb/usb.css', import.meta.url), 'utf8');
 const sitemap = await readFile(new URL('../sitemap.xml', import.meta.url), 'utf8');
 
 test('usb order posts the usb_order_v1 contract to the lead function', () => {
@@ -57,11 +58,29 @@ test('the WhatsApp order message never carries the name or the phone', () => {
 test('free trial box: Windows download page and a mailto link, no email service', () => {
   assert.match(html, /id="trialDownload" href="\/windows\/"/);
   assert.match(html, /جرّبه مجانًا لمدة 14 يومًا/);
-  assert.match(js, /trialTitle: 'Essayez-le gratuitement pendant 14 jours'/);
+  assert.match(js, /trialTitle: 'Pas encore sûr \? Essayez-le gratuitement pendant 14 jours'/);
   assert.match(js, /trialSend\.href = email \? 'mailto:'/);
   // The email address only goes into the mailto link, never to a server.
   const trial = js.slice(js.indexOf('function trialEmailValue'), js.indexOf('trialForm.addEventListener'));
   assert.doesNotMatch(trial, /fetch\(|endpoint/);
+});
+
+test('trial sits below the order box, not inside the order form', () => {
+  const form = html.slice(html.indexOf('id="formView"'), html.indexOf('id="successView"'));
+  assert.doesNotMatch(form, /id="trialBox"/);
+  assert.ok(html.indexOf('id="trialBox"') > html.indexOf('id="successView"'));
+});
+
+test('WhatsApp bubble and sticky bar hide while the order section is on screen', () => {
+  assert.ok(js.includes("observe(document.getElementById('order'))"));
+  assert.ok(js.includes("waFloat.classList.toggle('is-hidden'"));
+  assert.ok(css.includes('.wa-float.is-hidden'));
+});
+
+test('proof numbers use a no-break space and the words, not a "+" sign', () => {
+  assert.ok(html.includes('<b>19&nbsp;000</b>'));
+  assert.ok(js.includes('<b>19\\u00a0000</b>'));
+  assert.doesNotMatch(html, /19 000|\+19|19\+/);
 });
 
 test('price, page and sitemap agree', () => {

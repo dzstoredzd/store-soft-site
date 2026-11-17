@@ -193,11 +193,13 @@
     a8: 'Arabe, français et anglais.',
     q9: 'Marche-t-il sur plusieurs appareils ?',
     a9: 'Le prix est pour un ordinateur. Pour un autre appareil (ordinateur ou téléphone) avec les mêmes données, ajoutez la synchronisation Cloud : 4\u00a0000 DA par an et par appareil en plus.',
-    trialOr: 'ou',
-    trialTitle: 'Essayez-le gratuitement pendant 14 jours',
-    trialText: 'Téléchargez le logiciel sur un ordinateur Windows maintenant, ou envoyez le lien à votre e-mail pour l’ouvrir sur l’ordinateur.',
-    trialDownload: 'Télécharger maintenant',
-    trialEmailLabel: 'Ou envoyez le lien à votre e-mail',
+    proofSales: 'Plus de <b>19\u00a0000</b> ventes enregistrées avec Store Soft',
+    proofDevices: 'Plus de <b>300</b> téléphones et ordinateurs y ont enregistré leurs ventes',
+    proofNote: 'Selon les statistiques du logiciel depuis septembre 2026',
+    trialTitle: 'Pas encore sûr ? Essayez-le gratuitement pendant 14 jours',
+    trialDownload: 'Télécharger pour ordinateur (Windows)',
+    trialEmailLabel: 'Envoyer le lien à mon e-mail',
+    trialEmailField: 'Votre e-mail',
     trialSend: 'Envoyer',
     trialEmailNote: 'Votre application e-mail s’ouvre avec le message prêt. Appuyez sur « Envoyer ».',
     finalTitle: 'Prêt à mettre de l’ordre dans vos comptes ?',
@@ -432,6 +434,7 @@
       var target = waLink(orderMessage(values));
       successWhatsApp.href = target;
       document.getElementById('formView').hidden = true;
+      document.getElementById('trialBox').hidden = true; // ordered: no trial offer under the thank-you
       document.getElementById('successView').hidden = false;
       document.getElementById('successView').focus();
       // The honeypot gets ok without a saved lead; do not count it.
@@ -491,12 +494,25 @@
   trialForm.addEventListener('submit', function (event) { event.preventDefault(); trialSend.click(); });
   waFloat.addEventListener('click', function () { track('WhatsAppCTAClick'); });
 
-  // Phone: hide the fixed "Order" bar while the form is on screen.
+  // The trial's email field opens only when asked, so the trial stays one small line.
+  var trialToggle = document.getElementById('trialEmailToggle');
+  trialToggle.addEventListener('click', function () {
+    var open = trialForm.hidden;
+    trialForm.hidden = !open;
+    trialToggle.setAttribute('aria-expanded', String(open));
+    if (open) trialEmail.focus();
+  });
+
+  // While any part of the order form is on screen, hide the fixed "Order" bar
+  // (phones) and the WhatsApp bubble, so neither covers a field.
   var sticky = document.getElementById('stickyCta');
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) { sticky.classList.toggle('is-hidden', entry.isIntersecting); });
-    }, { threshold: 0.15 }).observe(document.getElementById('order'));
+      entries.forEach(function (entry) {
+        sticky.classList.toggle('is-hidden', entry.isIntersecting);
+        waFloat.classList.toggle('is-hidden', entry.isIntersecting);
+      });
+    }, { threshold: 0 }).observe(document.getElementById('order'));
   }
 
   document.getElementById('year').textContent = new Date().getFullYear();

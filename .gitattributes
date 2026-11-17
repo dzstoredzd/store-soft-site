@@ -1,0 +1,2 @@
+# Third-party data copied byte for byte (see usb/data/SOURCE.md): never convert line endings.
+usb/data/*.json -text

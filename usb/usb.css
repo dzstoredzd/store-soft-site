@@ -159,12 +159,6 @@ h1, h2, h3 { margin: 0; line-height: 1.3; color: var(--midnight); }
 .trap { display: none; }
 .btn--outline { background: var(--white); color: var(--blue); border: 2px solid var(--blue); }
 .btn--outline:hover { background: var(--tint); }
-/* Proof: two real numbers under the hero. */
-.proof { padding: 0 0 28px; }
-.proof__inner { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; text-align: center; }
-.proof__item { margin: 0; color: var(--midnight); font-weight: 600; }
-.proof__item b { color: var(--blue); font-size: 22px; }
-.proof__note { flex-basis: 100%; margin: 0; color: var(--muted); font-size: 13px; }
 
 /* Free trial: a small line under the order box, not a second big button. */
 .trial { max-width: 620px; margin: 18px auto 0; text-align: center; color: var(--muted); font-size: 15px; }
@@ -231,7 +225,8 @@ h1, h2, h3 { margin: 0; line-height: 1.3; color: var(--midnight); }
 .feature .ticks { margin: 0; }
 .feature__shot { border-radius: 12px; border: 1px solid var(--line); }
 
-.sync { max-width: 760px; }
+.sync { display: grid; gap: 28px; align-items: center; }
+.sync__phone { width: min(300px, 78%); justify-self: center; margin-bottom: -48px; }
 .sync h2 { font-size: clamp(24px, 4.5vw, 34px); margin-bottom: 10px; }
 .sync p { margin: 0 0 16px; }
 
@@ -293,6 +288,8 @@ h1, h2, h3 { margin: 0; line-height: 1.3; color: var(--midnight); }
   .hero__grid { grid-template-columns: 1fr 1.15fr; gap: 48px; }
   .feature { grid-template-columns: 1fr 1.4fr; padding: 28px; }
   .feature:nth-child(even) .feature__text { order: 2; }
+  .sync { grid-template-columns: 1.3fr 1fr; gap: 48px; }
+  .sync__phone { width: 320px; }
   .sticky-cta { display: none; }
   .wa-float { bottom: 24px; }
   .foot { padding-bottom: 26px; }

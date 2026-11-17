@@ -77,14 +77,20 @@ test('WhatsApp bubble and sticky bar hide while the order section is on screen',
   assert.ok(css.includes('.wa-float.is-hidden'));
 });
 
-test('proof numbers use a no-break space and the words, not a "+" sign', () => {
-  assert.ok(html.includes('<b>19&nbsp;000</b>'));
-  assert.ok(js.includes('<b>19\\u00a0000</b>'));
-  assert.doesNotMatch(html, /19 000|\+19|19\+/);
-});
-
 test('price, page and sitemap agree', () => {
   assert.match(js, /var price = 9000;/);
   assert.match(html, /<link rel="canonical" href="https:\/\/storesoft.org\/usb\/" \/>/);
   assert.match(sitemap, /<loc>https:\/\/storesoft.org\/usb\/<\/loc>/);
+});
+
+test('hero shows a full cart, phones get the cart close-up, phone section has the phone picture', async () => {
+  assert.ok(html.includes('<source media="(max-width: 599px)" srcset="assets/sell-cart-phone.webp"'));
+  assert.ok(html.includes('<img src="assets/sell-cart.webp" width="1280" height="642"'));
+  assert.ok(html.includes('src="assets/phone-hand.webp" width="627" height="1060"'));
+  assert.ok(js.includes("syncShotAlt: 'Store Soft sur un téléphone Android"));
+  assert.doesNotMatch(html, /assets\/sell\.webp/);
+  for (const name of ['sell-cart.webp', 'sell-cart-phone.webp', 'phone-hand.webp']) {
+    const bytes = await readFile(new URL('../usb/assets/' + name, import.meta.url));
+    assert.equal(bytes.subarray(8, 12).toString(), 'WEBP', name);
+  }
 });

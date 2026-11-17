@@ -65,7 +65,7 @@ try {
     // The pricing section shows the same price card as /pricing/, in the page language.
     assert.equal(await page.locator('[data-pricing-frame]').getAttribute('src'), `/pricing/?lang=${config.lang}&embed=1`);
     const prices = page.frameLocator('[data-pricing-frame]');
-    assert.equal(await prices.locator('[data-code="yearly"] .amount').innerText(), '6 900 DA');
+    assert.equal(await prices.locator('[data-code="pro"] .amount').textContent(), (config.lang === 'ar' ? '9\u00a0000\u00a0دج' : '9\u00a0000\u00a0DA'));
     assert.equal(await prices.locator('html').getAttribute('lang'), config.lang);
     await page.waitForFunction(() => {
       const frame = document.querySelector('[data-pricing-frame]');

@@ -12,20 +12,21 @@ browser to preview locally.
 
 The owner replaced the Supabase pricing setup with static website content.
 Edit pricing/offers.js for prices, names, features and the small note in
-Arabic, French and English. Amounts are integer centimes. The page (simplified
-23 October 2026) shows one clear card for the yearly plan (billing "yearly":
-6,900 DA/year for the first device + 3,000 DA/year per extra device): big
-total for the chosen device count, "less than N DA a day", a − / + device
-count (1–100), "what you get" list, one WhatsApp button whose message carries
-the device count and total, the CCP/BaridiMob line and the "already paid
-customers keep their activation" note. Until 31 October 2026 the old lifetime
-offer (billing "lifetime": 7,000 DA once for the first device,
-`available_until: "2026-10-31"`) shows as a small orange strip above the card
-with the days left (today and 31 October count, Algeria time) and its own
-WhatsApp link; from 1 November it hides itself, so no publish is needed that
-day. The "we help you choose" WhatsApp box shows only when prices cannot be
-shown. Support confirms the actual charge before activation. The homepage
-hero says "yearly subscription".
+Arabic, French and English. Amounts are integer centimes. Since 17 November 2026
+the page shows the same offer as the app's Algeria page (`algeria_offer.dart`,
+dz* ARB texts): one card (billing "once") with Pro 9,000 DA once for one device
+forever, its 5 points, then optional Cloud Sync at 4,000 DA/year per extra device
+(− / + from 0 to `max_extra_devices` 3, more on WhatsApp) with its 5 points, a total
+("9 000 دج + 8 000 دج / سنة"), one WhatsApp button whose message carries the plan
+and total, the CCP/BaridiMob line and the "already paid customers keep their
+activation" note. The old yearly (6,900 + 3,000 DA/year) and lifetime offers are gone.
+The money sign follows the language like the app (DECISIONS 2026-10-28): دج in
+Arabic, DA in French, DZD in English. Every price uses no-break spaces ("9&nbsp;000",
+` ` in JS): with a plain space, right-to-left Arabic text draws "000 9".
+`test/rtl-prices.browser.mjs` measures the drawn order on every Arabic page.
+The "we help you choose" WhatsApp box shows only when prices cannot be shown.
+Support confirms the actual charge before activation. The homepage hero line
+says "pay once: 9 000 دج".
 Publish the website after edits and bump the offers.js version in pricing/index.html
 so existing browsers receive the new file. No app update is needed for these edits.
 

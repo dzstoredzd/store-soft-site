@@ -8,33 +8,40 @@ test('website owns complete localized offers and integer-centime prices without 
   const context = {window:{}};
   vm.runInNewContext(await readFile(new URL('../pricing/offers.js',import.meta.url),'utf8'),context);
   const offers=context.window.storeSoftOffers;
-  assert.equal(offers.map(offer=>offer.code).join(','),'lifetime,yearly');
-  const [lifetime,yearly]=offers;
-  for(const offer of offers){
-    assert.equal(offer.additional_device_year_centimes,300000);
-    for(const lang of ['ar','fr','en']) assert.ok(offer.title[lang].length);
-  }
-  // The lifetime strip shows only its title, price and days left.
-  assert.equal(lifetime.billing,'lifetime');
-  assert.equal(lifetime.first_device_once_centimes,700000);
-  assert.equal(lifetime.available_until,'2026-10-31');
-  assert.equal(yearly.billing,'yearly');
-  assert.equal(yearly.first_device_year_centimes,690000);
-  assert.equal(yearly.available_until,undefined);
+  // Same offer as the app's Algeria page (algeria_offer.dart): kDzPayOnce 900000,
+  // kDzExtraDeviceYear 400000, kDzMaxExtraDevices 3.
+  assert.equal(offers.map(offer=>offer.code).join(','),'pro');
+  const [pro]=offers;
+  assert.equal(pro.billing,'once');
+  assert.equal(pro.once_centimes,900000);
+  assert.equal(pro.sync.additional_device_year_centimes,400000);
+  assert.equal(pro.sync.max_extra_devices,3);
+  assert.equal(pro.available_until,undefined);
   for(const lang of ['ar','fr','en']){
-    assert.equal(yearly.features[lang].length,7);
-    assert.ok(yearly.billing_note[lang].length);
+    assert.ok(pro.title[lang].length);
+    assert.equal(pro.features[lang].length,5);
+    assert.equal(pro.sync.features[lang].length,5);
+    assert.ok(pro.billing_note[lang].length);
   }
-  assert.match(yearly.billing_note.ar,/يحتفظون بتفعيلهم الحالي/);
+  assert.equal(pro.title.ar,'ادفع مرة واحدة، والبرنامج لك للأبد');
+  assert.match(pro.billing_note.ar,/يحتفظون بتفعيلهم الحالي/);
   assert.match(script,/today <= offer\.available_until/);
+  assert.doesNotMatch(await readFile(new URL('../pricing/offers.js',import.meta.url),'utf8'),/690000|300000|"yearly"|"lifetime"/);
 });
-test('home page shows the yearly price, not a one-time payment', async()=>{
+test('money sign follows the language and keeps the number in one piece', async()=>{
+  const script = await readFile(new URL('../pricing/pricing.js',import.meta.url),'utf8');
+  assert.match(script,/sign: 'دج'/);assert.match(script,/sign: 'DA'/);assert.match(script,/sign: 'DZD'/);
+  assert.match(script,/var NBSP = '\\u00a0';/);
+  assert.match(script,/replace\(\/\\B\(\?=\(\\d\{3\}\)\+\(\?!\\d\)\)\/g, NBSP\)/);
+});
+test('home page says pay once, 9 000, with the sign of each language', async()=>{
   const read=file=>readFile(new URL('../'+file,import.meta.url),'utf8');
   const [home,page]=await Promise.all([read('home.js'),read('index.html')]);
-  assert.match(home,/"yearly": "اشتراك سنوي بسيط"/);
-  assert.match(home,/"yearly": "Abonnement annuel simple"/);
-  assert.match(page,/data-home-copy="yearly"/);
-  assert.doesNotMatch(home+page,/دفع مرة واحدة|paiement unique/);
+  assert.match(home,/"priceOnce": "ادفع مرة واحدة: 9\\u00a0000 دج"/);
+  assert.match(home,/"priceOnce": "Payez une seule fois : 9\\u00a0000 DA"/);
+  assert.match(page,/data-home-copy="priceOnce">ادفع مرة واحدة: 9&nbsp;000 دج</);
+  assert.doesNotMatch(home+page,/اشتراك سنوي|Abonnement annuel|"yearly"/);
+  for(const key of ['mockSales','mockProfit','mockOwed']) assert.match(page,new RegExp(`data-home-copy="${key}">[^<]*دج<`));
 });
 test('every Store Soft page uses the self-hosted app font (IBM Plex Sans Arabic), no Google Fonts', async()=>{
   const read=file=>readFile(new URL('../'+file,import.meta.url),'utf8');

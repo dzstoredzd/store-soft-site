@@ -23,68 +23,52 @@ try{
     const errors=[],external=[];
     page.on('pageerror',error=>errors.push(error.message));
     await page.route('**/*',route=>{if(route.request().url().startsWith(base))return route.continue();external.push(route.request().url());return route.abort();});
-    // Before 1 November 2026 (Algeria time): one yearly card plus the lifetime strip.
-    await page.clock.setFixedTime(new Date('2026-10-31T22:30:00Z'));
+    // Pay once (Pro) plus optional Cloud Sync per extra device, like the app's Algeria page.
+    const sign={ar:'دج',fr:'DA',en:'DZD'};
+    const price=(n,language)=>n.replace(' ','\u00a0')+'\u00a0'+sign[language];
     for(const language of ['ar','fr','en']){
       await page.goto(base+'/pricing/?lang='+language);
       await page.locator('.offer').first().waitFor();
       assert.equal(await page.locator('html').getAttribute('dir'),language==='ar'?'rtl':'ltr');
       assert.equal(await page.locator('html').getAttribute('lang'),language);
-      const card=page.locator('[data-code="yearly"]'),strip=page.locator('.last-offer');
+      const card=page.locator('[data-code="pro"]');
       assert.equal(await page.locator('.offer').count(),1,'One clear card');
-      assert.equal(await card.locator('.count').innerText(),'1');
-      assert.ok(await card.locator('.less').isDisabled(),'Cannot go below one device');
-      assert.equal(await card.locator('.amount').innerText(),'6 900 DA');
-      assert.match(await card.locator('.per-day').innerText(),/19 DA/);
-      assert.match(await card.locator('.extra').innerText(),/3 000 DA/);
-      assert.equal(await card.locator('.features li').count(),7);
+      assert.equal(await card.locator('.amount').textContent(),price('9 000',language));
+      assert.equal(await card.locator('.count').innerText(),'0');
+      assert.ok(await card.locator('.less').isDisabled(),'Cannot go below zero extra devices');
+      assert.match(await card.locator('.extra').textContent(),new RegExp(price('4 000',language)));
+      assert.equal(await card.locator('.offer > .features li, :scope > .features li').count(),5);
+      assert.equal(await card.locator('.sync .features li').count(),5);
+      assert.equal(await card.locator('.total-value').innerText(),price('9 000',language));
       assert.match(await card.locator('.payment').innerText(),/CCP[\s\S]*BaridiMob/);
-      // 31 October 23:30 in Algeria: the lifetime strip says it is the last day.
-      assert.ok(await strip.isVisible());
-      assert.match(await strip.innerText(),/7 000 DA/);
-      assert.equal(await strip.locator('.badge').innerText(),{ar:'⏳ اليوم آخر يوم',fr:'⏳ Dernier jour aujourd’hui',en:'⏳ Last day today'}[language]);
-      assert.match(await strip.getAttribute('href'),/^https:\/\/wa\.me\/213654338649\?text=/);
       assert.equal(await page.locator('#status').isVisible(),false,'No status line when prices show');
       assert.equal(await page.locator('#help').isVisible(),false,'One WhatsApp button when prices show');
-      assert.doesNotMatch(await page.locator('.offers').innerText()+await strip.innerText(),/دج|7000|6900/,'One price format: "7 000 DA"');
+      assert.doesNotMatch(await page.locator('.offers').textContent(),/(^|\D)(6\s?900|3\s?000|7\s?000)(\D|$)/,'No old prices (6 900, 3 000, 7 000)');
+      for(const other of Object.values(sign).filter(s=>s!==sign[language]))
+        assert.doesNotMatch(await page.locator('.offers').textContent(),new RegExp('\\d\u00a0'+other+'(?![A-Z])'),`${language}: only ${sign[language]}`);
       assert.ok(await page.evaluate(async()=>{await document.fonts.ready;return document.fonts.check('700 16px "IBM Plex Sans Arabic"')&&getComputedStyle(document.body).fontFamily.startsWith('"IBM Plex Sans Arabic"');}),'App font is loaded');
-      await card.locator('.more').click();
-      assert.equal(await card.locator('.amount').innerText(),'9 900 DA');
+      await card.locator('.more').click();await card.locator('.more').click();
+      assert.equal(await card.locator('.count').innerText(),'2');
+      assert.equal(await card.locator('.count-label').innerText(),{ar:'جهازان إضافيان',fr:'2 appareils en plus',en:'2 extra devices'}[language]);
+      assert.equal(await card.locator('.total-value').innerText(),price('9 000',language)+' + '+price('8 000',language)+{ar:' / سنة',fr:' / an',en:' / year'}[language]);
       await card.locator('.more').click();
       assert.equal(await card.locator('.count').innerText(),'3');
-      assert.ok(await card.locator('.more').isDisabled(),'The packs stop at 3 devices');
-      assert.ok((await card.locator('.more-devices').getAttribute('href')).startsWith('https://wa.me/213654338649?text='),'More than 3 devices goes to WhatsApp');
-      assert.equal(await card.locator('.amount').innerText(),'12 900 DA');
-      assert.match(await card.locator('.per-day').innerText(),/36 DA/);
+      assert.ok(await card.locator('.more').isDisabled(),'Stops at 3 extra devices, like the app');
+      assert.ok((await card.locator('.more-devices').getAttribute('href')).startsWith('https://wa.me/213654338649?text='),'More devices goes to WhatsApp');
       const order=decodeURIComponent((await card.locator('.button').getAttribute('href')).split('?text=')[1]);
-      assert.ok(order.includes('3')&&order.includes('12 900 DA'),'WhatsApp order carries devices and total');
+      assert.ok(order.includes(price('9 000',language))&&order.includes(price('12 000',language)),'WhatsApp order carries the total');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${width}/${language} overflow`);
-      for(const selector of ['[data-code="yearly"] .less','[data-code="yearly"] .more','[data-code="yearly"] .more-devices','[data-code="yearly"] .button','.last-offer','[data-lang="ar"]']){
+      for(const selector of ['[data-code="pro"] .less','[data-code="pro"] .more','[data-code="pro"] .more-devices','[data-code="pro"] .button','[data-lang="ar"]']){
         const box=await page.locator(selector).boundingBox();assert.ok(box.height>=48&&box.width>=48,`${selector} touch target`);
       }
       await context.setOffline(true);
       await page.evaluate(()=>window.dispatchEvent(new Event('offline')));
       assert.equal(await page.locator('.offer').count(),1,'Loaded static prices remain available offline');
-      await card.locator('.less').click();await card.locator('.less').click();
-      assert.equal(await card.locator('.amount').innerText(),'6 900 DA');
+      await card.locator('.less').click();await card.locator('.less').click();await card.locator('.less').click();
+      assert.equal(await card.locator('.total-value').innerText(),price('9 000',language));
       await context.setOffline(false);
       if(process.env.QA_OUTPUT_DIR&&[390,1440].includes(width)){await mkdir(process.env.QA_OUTPUT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.QA_OUTPUT_DIR,`static-pricing-${width}-${language}.png`),fullPage:true});}
     }
-    // Days left count today and 31 October (Algeria time).
-    for(const [time,label] of [['2026-10-22T10:00:00Z','⏳ باقي 10 أيام فقط'],['2026-10-30T09:00:00Z','⏳ باقي يومان فقط'],['2026-10-19T23:30:00Z','⏳ باقي 12 يومًا فقط']]){
-      await page.clock.setFixedTime(new Date(time));
-      await page.goto(base+'/pricing/?lang=ar');
-      assert.equal(await page.locator('.last-offer .badge').innerText(),label);
-    }
-    await page.goto(base+'/pricing/?lang=fr');
-    assert.equal(await page.locator('.last-offer .badge').innerText(),'⏳ Plus que 12 jours');
-    // From 1 November 2026 00:00 Algeria time the lifetime strip is gone.
-    await page.clock.setFixedTime(new Date('2026-10-31T23:00:00Z'));
-    await page.goto(base+'/pricing/?lang=ar');
-    await page.locator('.offer').first().waitFor();
-    assert.equal(await page.locator('.offer').count(),1);
-    assert.equal(await page.locator('.last-offer').count(),0);
-    assert.equal(await page.locator('[data-code="yearly"] .amount').innerText(),'6 900 DA');
     await page.goto(base+'/pricing/?lang=invalid');assert.equal(await page.locator('html').getAttribute('lang'),'ar');
     // Missing offers: error line and the WhatsApp help box.
     await page.route('**/pricing/offers.js*',route=>route.fulfill({status:200,contentType:'text/javascript',body:''}));

@@ -90,7 +90,7 @@ try {
     // The same price card as /pricing/, shown in a frame that grows to fit it.
     assert.equal(await page.locator('[data-pricing-frame]').getAttribute('src'), '/pricing/?lang=' + config.lang + '&embed=1');
     const priceFrame = page.frameLocator('[data-pricing-frame]');
-    assert.equal(await priceFrame.locator('[data-code="yearly"] .amount').innerText(), '6 900 DA');
+    assert.equal(await priceFrame.locator('[data-code="pro"] .amount').textContent(), (config.lang === 'ar' ? '9\u00a0000\u00a0دج' : '9\u00a0000\u00a0DA'));
     assert.equal(await priceFrame.locator('html').getAttribute('lang'), config.lang);
     assert.equal(await priceFrame.locator('.topbar').isVisible(), false, 'No second header inside the frame');
     await page.waitForFunction(() => {
@@ -98,7 +98,7 @@ try {
       const inner = frame.contentDocument.body.getBoundingClientRect().height;
       return inner > 300 && Math.abs(frame.getBoundingClientRect().height - Math.ceil(inner)) <= 2;
     });
-    assert.equal(await priceFrame.locator('[data-code="yearly"] .button').getAttribute('target'), '_blank');
+    assert.equal(await priceFrame.locator('[data-code="pro"] .button').getAttribute('target'), '_blank');
     assert.match(await page.locator('.android-prices h2').innerText(), config.lang === 'ar' ? /الأسعار والعروض الحالية/ : /Tarifs et offres actuels/);
     assert.equal(await page.locator('#email, #downloadWindows').count(), 0);
     assert.equal(await page.locator('.video-frame iframe').getAttribute('src'), 'https://www.youtube-nocookie.com/embed/80QGPOKsXXg?rel=0');

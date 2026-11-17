@@ -33,7 +33,7 @@
   // Texts used only by the script (both languages).
   var messages = {
     ar: {
-      pageTitle: 'Store Soft على فلاشة USB — 9 000 دج مرة واحدة، الدفع عند الاستلام',
+      pageTitle: 'Store Soft على فلاشة USB — 9\u00a0000 دج مرة واحدة، الدفع عند الاستلام',
       submitting: 'جاري إرسال الطلبية…',
       required: 'هذا الحقل مطلوب.',
       invalidName: 'اكتب اسمًا من حرفين إلى 80 حرفًا.',
@@ -42,17 +42,17 @@
       dataLoading: 'جاري تحميل الولايات…',
       dataError: 'تعذّر تحميل قائمة الولايات. أعد تحميل الصفحة، أو راسلنا على واتساب.',
       generalError: 'تعذّر إرسال الطلبية. تحقق من الإنترنت وحاول مرة أخرى، أو راسلنا على واتساب.',
-      waHello: 'السلام عليكم، طلبت Store Soft على فلاشة USB (9 000 دج، الدفع عند الاستلام).',
+      waHello: 'السلام عليكم، طلبت Store Soft على فلاشة USB (9\u00a0000 دج، الدفع عند الاستلام).',
       waCode: 'رقم الطلبية', waWilaya: 'الولاية', waBaladia: 'البلدية',
-      waQuestion: 'السلام عليكم، عندي سؤال عن Store Soft على فلاشة USB (9 000 دج).',
+      waQuestion: 'السلام عليكم، عندي سؤال عن Store Soft على فلاشة USB (9\u00a0000 دج).',
       invalidEmail: 'اكتب بريدًا إلكترونيًا صحيحًا، مثل nom@gmail.com',
       mailSubject: 'رابط تحميل Store Soft للحاسوب (تجربة 14 يومًا مجانًا)',
       mailBody: 'افتح هذا الرابط على حاسوب Windows لتحميل Store Soft وتجربته مجانًا لمدة 14 يومًا:',
-      mailOrder: 'لطلب النسخة الكاملة على فلاشة USB (9 000 دج، الدفع عند الاستلام):',
+      mailOrder: 'لطلب النسخة الكاملة على فلاشة USB (9\u00a0000 دج، الدفع عند الاستلام):',
       switchLabel: 'Afficher en français'
     },
     fr: {
-      pageTitle: 'Store Soft sur clé USB — 9 000 DA une seule fois, paiement à la livraison',
+      pageTitle: 'Store Soft sur clé USB — 9\u00a0000 DA une seule fois, paiement à la livraison',
       submitting: 'Envoi de la commande…',
       required: 'Ce champ est obligatoire.',
       invalidName: 'Saisissez un nom de 2 à 80 caractères.',
@@ -61,13 +61,13 @@
       dataLoading: 'Chargement des wilayas…',
       dataError: 'Impossible de charger la liste des wilayas. Rechargez la page, ou écrivez-nous sur WhatsApp.',
       generalError: 'Envoi impossible. Vérifiez votre connexion et réessayez, ou écrivez-nous sur WhatsApp.',
-      waHello: 'Bonjour, j’ai commandé Store Soft sur clé USB (9 000 DA, paiement à la livraison).',
+      waHello: 'Bonjour, j’ai commandé Store Soft sur clé USB (9\u00a0000 DA, paiement à la livraison).',
       waCode: 'N° de commande', waWilaya: 'Wilaya', waBaladia: 'Commune',
-      waQuestion: 'Bonjour, j’ai une question sur Store Soft sur clé USB (9 000 DA).',
+      waQuestion: 'Bonjour, j’ai une question sur Store Soft sur clé USB (9\u00a0000 DA).',
       invalidEmail: 'Saisissez un e-mail valide, par exemple nom@gmail.com',
       mailSubject: 'Lien de téléchargement Store Soft pour ordinateur (essai gratuit 14 jours)',
       mailBody: 'Ouvrez ce lien sur un ordinateur Windows pour télécharger Store Soft et l’essayer gratuitement 14 jours :',
-      mailOrder: 'Pour commander la version complète sur clé USB (9 000 DA, paiement à la livraison) :',
+      mailOrder: 'Pour commander la version complète sur clé USB (9\u00a0000 DA, paiement à la livraison) :',
       switchLabel: 'عرض الصفحة بالعربية'
     }
   };
@@ -75,7 +75,7 @@
   // French page text. Keys match data-i in index.html.
   var fr = {
     skip: 'Aller au formulaire de commande',
-    strip: '<b>9 000 DA</b> une seule fois · Livraison gratuite · Paiement à la livraison',
+    strip: '<b>9\u00a0000 DA</b> une seule fois · Livraison gratuite · Paiement à la livraison',
     orderNow: 'Commander',
     heroBadge: 'Payez une seule fois — sans abonnement mensuel',
     heroTitle: 'Le logiciel de votre magasin sur clé USB, <span>livré jusqu’à votre porte</span>',
@@ -92,7 +92,7 @@
     shotSell: 'L’écran de vente de Store Soft sur ordinateur',
     shotSellAlt: 'L’écran de vente de Store Soft sur ordinateur',
     orderTitle: 'Commandez votre copie',
-    orderText: 'Remplissez vos informations. Nous vous appelons pour confirmer, puis nous envoyons la clé. Vous payez 9 000 DA à la réception.',
+    orderText: 'Remplissez vos informations. Nous vous appelons pour confirmer, puis nous envoyons la clé. Vous payez 9\u00a0000 DA à la réception.',
     nameLabel: 'Nom ou nom du magasin',
     namePlaceholder: 'Exemple : Mohamed — Alimentation',
     phoneLabel: 'Téléphone',
@@ -164,7 +164,7 @@
     syncBadge: 'En option',
     syncTitle: 'Votre magasin aussi sur votre téléphone',
     syncText: 'Store Soft existe aussi sur téléphone Android. Avec la synchronisation Cloud (Cloud Sync), vous voyez les mêmes ventes et le même stock sur l’ordinateur et le téléphone.',
-    sync1: '4 000 DA par an pour chaque appareil en plus',
+    sync1: '4\u00a0000 DA par an pour chaque appareil en plus',
     sync2: 'La vente marche sans Internet, la synchro se fait quand il revient',
     sync3: 'Inutile si vous n’avez qu’un seul ordinateur',
     boxTitle: 'Qu’y a-t-il sur la clé ?',
@@ -178,7 +178,7 @@
     q1: 'Le logiciel a-t-il besoin d’Internet ?',
     a1: 'Non. Ventes, stock et crédits marchent sans Internet. Il faut Internet une seule fois pour activer la clé, et pour la synchronisation Cloud si vous la prenez.',
     q2: 'Est-ce que je paie chaque mois ?',
-    a2: 'Non. Vous payez 9 000 DA une seule fois pour un ordinateur. Seule la synchronisation Cloud, en option, se paie chaque année (4 000 DA par appareil en plus).',
+    a2: 'Non. Vous payez 9\u00a0000 DA une seule fois pour un ordinateur. Seule la synchronisation Cloud, en option, se paie chaque année (4\u00a0000 DA par appareil en plus).',
     q3: 'Quand est-ce que je paie ?',
     a3: 'À la réception de la clé, au livreur. Rien à payer à la commande, et la livraison est gratuite.',
     q4: 'Puis-je l’essayer avant de commander ?',
@@ -192,7 +192,7 @@
     q8: 'Quelles sont les langues du logiciel ?',
     a8: 'Arabe, français et anglais.',
     q9: 'Marche-t-il sur plusieurs appareils ?',
-    a9: 'Le prix est pour un ordinateur. Pour un autre appareil (ordinateur ou téléphone) avec les mêmes données, ajoutez la synchronisation Cloud : 4 000 DA par an et par appareil en plus.',
+    a9: 'Le prix est pour un ordinateur. Pour un autre appareil (ordinateur ou téléphone) avec les mêmes données, ajoutez la synchronisation Cloud : 4\u00a0000 DA par an et par appareil en plus.',
     trialOr: 'ou',
     trialTitle: 'Essayez-le gratuitement pendant 14 jours',
     trialText: 'Téléchargez le logiciel sur un ordinateur Windows maintenant, ou envoyez le lien à votre e-mail pour l’ouvrir sur l’ordinateur.',
@@ -201,7 +201,7 @@
     trialSend: 'Envoyer',
     trialEmailNote: 'Votre application e-mail s’ouvre avec le message prêt. Appuyez sur « Envoyer ».',
     finalTitle: 'Prêt à mettre de l’ordre dans vos comptes ?',
-    finalText: '9 000 DA une seule fois. Livraison gratuite et paiement à la livraison.',
+    finalText: '9\u00a0000 DA une seule fois. Livraison gratuite et paiement à la livraison.',
     privacy: 'Confidentialité',
     terms: 'Conditions'
   };
